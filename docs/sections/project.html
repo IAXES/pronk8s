@@ -1,0 +1,407 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta content="Cloud native DevOps - practical project - create your own build infrastructure with Raspberry Pi development boards and virtual machines." name="description" />
+<meta content="devops, Matthew Giassa, Giassa, IAXES, cloud native, cloud, kubernetes, docker, containers, raspberry pi, infrastructure, project" name="keywords" />
+<meta content="Matthew Giassa" name="author" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Practical Project: Raspberry Pi DevOps Cluster &mdash; Cloud Native DevOps: Migrating from Monoliths to Microservices 0.0.2 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="https://iaxes.github.io/pronk8s/sections/project.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Conclusion" href="outro.html" />
+    <link rel="prev" title="Security" href="sec.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Cloud Native DevOps: Migrating from Monoliths to Microservices
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#donations-and-ethics-disclaimer">Donations and Ethics Disclaimer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#why-pronk8s">Why PronK8S</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#dedication">Dedication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html#license">License</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cicd.html">Continous Integration &amp; Continuous Delivery</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cicd.html#version-control-and-branching-strategies">Version Control and Branching Strategies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cicd.html#anarchy-one-branch-to-rule-them-all">Anarchy: One Branch to Rule Them All</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cicd.html#developer-branches">Developer Branches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cicd.html#feature-branches">Feature Branches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cicd.html#release-branches">Release Branches</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cicd.html#platforms">Platforms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cicd.html#github-github-actions">GitHub &amp; GitHub Actions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cicd.html#gitlab">GitLab</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cicd.html#jenkins">Jenkins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cicd.html#circle-ci">Circle CI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cicd.html#automation-test-driven-development">Automation &amp; Test Driven Development</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cicd.html#pipelines">Pipelines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cicd.html#caching-artifacts">Caching Artifacts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cicd.html#triggering-downstream-jobs">Triggering Downstream Jobs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cicd.html#nightly-weekend-automation-tests">Nightly/weekend automation tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cicd.html#security-concerns-don-t-leak-credentials">Security Concerns: Don’t Leak Credentials</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="cicd.html#run-time-variables">Run-time Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cicd.html#keyword-masking-and-script-filtering">Keyword Masking and Script Filtering</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config_mgmt.html">Configuration Management &amp; Infrastructure as Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config_mgmt.html#declarative-versus-imperative-models">Declarative Versus Imperative Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config_mgmt.html#gitops-and-versioning-infrastructure-changes">GitOps and Versioning Infrastructure Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config_mgmt.html#rolling-upgrades">Rolling Upgrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config_mgmt.html#backup-and-restore-operations">Backup and Restore Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config_mgmt.html#panic-button">Panic Button</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config_mgmt.html#tooling">Tooling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="config_mgmt.html#ansible">Ansible</a></li>
+<li class="toctree-l3"><a class="reference internal" href="config_mgmt.html#terraform">Terraform</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="build_patterns.html">DevOps Build Patterns</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="build_patterns.html#bare-metal">Bare Metal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_patterns.html#virtual-machines">Virtual Machines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="build_patterns.html#history-and-hypervisors">History and Hypervisors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_patterns.html#single-vm-with-vagrant">Single VM with Vagrant</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="build_patterns.html#containers">Containers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="build_patterns.html#single-container-with-docker">Single Container with Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_patterns.html#multiple-containers-with-docker">Multiple Containers with Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_patterns.html#nested-containers-with-docker-in-docker">Nested Containers with Docker-in-Docker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_patterns.html#advanced-example-single-container-with-docker">Advanced Example: Single Container with Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="build_patterns.html#cluster-orchestration-with-kubernetes-k8s">Cluster Orchestration with Kubernetes (K8S)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="build_patterns.html#kubernetes-in-docker-kind">Kubernetes in Docker (KIND)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="build_patterns.html#best-practises-security-concerns">Best Practises &amp; Security Concerns</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="build_patterns.html#privileged-containers-rootless-containers">Privileged Containers &amp; Rootless Containers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_patterns.html#using-dockerignore-for-security-and-image-size-reduction">Using dockerignore for Security and Image Size Reduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_patterns.html#reducing-image-size-and-number-of-layers-with-apt">Reducing Image Size and Number of Layers with apt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_patterns.html#credential-leaks-don-t-embed-credentials">Credential Leaks - Don’t Embed Credentials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_patterns.html#verify-downloaded-packages-via-checksums">Verify Downloaded Packages via Checksums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_patterns.html#additional-reading">Additional Reading</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture Design Patterns</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#general-structure">General Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#ipc">IPC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#storage">Storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#logging">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#sidecars">Sidecars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#debugging-core-dumps-etc">Debugging, Core Dumps, etc.</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing Strategies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#pre-amble-containers-clusters">Pre-amble: Containers &amp; Clusters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="testing.html#unit-tests">Unit Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing.html#api-tests">API Tests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#internal-apis-and-unit-testing">Internal APIs and Unit Testing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#public-facing-api-testing">Public-Facing API Testing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="testing.html#feature-tests">Feature Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing.html#regression-tests">Regression Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing.html#fuzz-tests">Fuzz Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing.html#negative-testing">Negative Testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing.html#mocks-and-simulated-tests">Mocks and Simulated Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing.html#chaos-testing-break-everything-to-improve-your-app">Chaos Testing: Break Everything to Improve your App</a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing.html#testing-in-production">Testing in Production</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#the-historical-joke">The Historical Joke</a></li>
+<li class="toctree-l4"><a class="reference internal" href="testing.html#the-reality-of-cicd-and-cloud-environments">The Reality of CICD and Cloud Environments</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#regression-tests-statistics">Regression Tests &amp; Statistics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="testing.html#quick-tests-gate-keeping-code-reviews">Quick Tests &amp; Gate Keeping Code Reviews</a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing.html#hypothetical-builds-for-downstream-projects">Hypothetical Builds for Downstream Projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing.html#soak-tests-finding-obscure-bugs">Soak Tests: Finding Obscure Bugs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#end-to-end-tests">End-to-End Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="testing.html#testing-in-production-a-misnomer">Testing in Production: a Misnomer?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="testing.html#the-necessity-of-gitops">The Necessity of GitOps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="testing.html#rolling-upgrades-recovery">Rolling Upgrades &amp; Recovery</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="doc.html">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="doc.html#overview-keeping-documentation-current">Overview: Keeping Documentation Current</a></li>
+<li class="toctree-l2"><a class="reference internal" href="doc.html#markup-based-approaches">Markup-based Approaches</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="doc.html#read-the-docs-rst-sphinx">Read the Docs: rST + Sphinx</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.html#markdown">Markdown</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="doc.html#diagrams">Diagrams</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="doc.html#plantuml-puml">PlantUML/PUML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.html#mermaid-mmd">Mermaid/MMD</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="doc.html#graphical-and-wysiwyg-editors">Graphical and WYSIWYG Editors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="doc.html#bridging-the-gap-guis-for-markup-languages">Bridging the Gap: GUIs for Markup Languages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doc.html#google-docs">Google docs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="sec.html">Security</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sec.html#container-scanning">Container Scanning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sec.html#dependencies-and-supply-chain-attacks">Dependencies and Supply Chain Attacks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec.html#poetry">Poetry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec.html#snyk">Snyk</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="sec.html#common-vulnerabilities-and-exposures-cves">Common Vulnerabilities and Exposures (CVEs)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sec.html#reporting">Reporting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec.html#documenting">Documenting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sec.html#automatic-testing">Automatic Testing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Practical Project: Raspberry Pi DevOps Cluster</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#build-pattern-implementations-language-specific-boilerplate-examples">Build Pattern Implementations: Language-specific Boilerplate Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python-3-x">Python 3.x</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#go-golang">Go/Golang</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="outro.html">Conclusion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Cloud Native DevOps: Migrating from Monoliths to Microservices</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Practical Project: Raspberry Pi DevOps Cluster</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="practical-project-raspberry-pi-devops-cluster">
+<span id="sec-project"></span><h1>Practical Project: Raspberry Pi DevOps Cluster<a class="headerlink" href="#practical-project-raspberry-pi-devops-cluster" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This section is not yet complete, but I’m aiming to complete all of them
+by end-of-year 2022. Check-in once in a while for updates.</p>
+</div>
+<div class="section" id="build-pattern-implementations-language-specific-boilerplate-examples">
+<h2>Build Pattern Implementations: Language-specific Boilerplate Examples<a class="headerlink" href="#build-pattern-implementations-language-specific-boilerplate-examples" title="Permalink to this headline">¶</a></h2>
+<p>This section draws on the material covered throughout the book to provide the
+reader with ready-to-use boilerplate examples (in at least a few programming
+languages) of projects that use the concepts discussed so far. Ideally, it
+provides a skeleton project that handles a lot of the basics (i.e.
+containerizing an application, providing a Helm chart so that it can be
+trivially deployed and scaled within a cluster, unit testing at the code and
+cluster levels of operation, etc.). This allows one who is not yet fully versed
+in various cloud native technologies to rapidly get a “hello world” example
+program running in a throwaway cluster, and be able to “learn by doing” rather
+than having to learn and mentally context-load numerous technologies first.</p>
+<div class="section" id="python-3-x">
+<h3>Python 3.x<a class="headerlink" href="#python-3-x" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="go-golang">
+<h3>Go/Golang<a class="headerlink" href="#go-golang" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="outro.html" class="btn btn-neutral float-right" title="Conclusion" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="sec.html" class="btn btn-neutral float-left" title="Security" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Matthew Giassa.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
